@@ -49,12 +49,12 @@ class Authenticator(dns_common.DNSAuthenticator):
 
     def _perform(self, domain, validation_name, validation):
         client = self._get_online_client()
-        client.provider.domain_id = domain
+        client.provider.domain_id = ".".join(domain.split(".")[-2:])
         client.add_txt_record(domain, validation_name, validation)
 
     def _cleanup(self, domain, validation_name, validation):
         client = self._get_online_client()
-        client.provider.domain_id = domain
+        client.provider.domain_id = ".".join(domain.split(".")[-2:])
         client.del_txt_record(domain, validation_name, validation)
 
     def _get_online_client(self):
@@ -97,3 +97,10 @@ class _OnlineLexiconClient(dns_common_lexicon.LexiconClient):
             return
 
         super()._handle_general_error(e, domain_name)
+
+
+if __name__ == '__main__':
+    client = _OnlineLexiconClient("c90b654a895384470e8b94f87abcb6e9b3926d6a", 30)
+    client.provider.domain_id = "s4hana.me"
+    client._find_domain_id("dc1.s4hana.me")
+    print(client.provider.domain)
