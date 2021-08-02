@@ -1,7 +1,7 @@
 from setuptools import setup
 from setuptools import find_packages
 
-version = "0.0.7"
+version = "0.0.8"
 
 install_requires = [
     "acme>=0.29.0",
@@ -9,6 +9,7 @@ install_requires = [
     "setuptools",
     "requests",
     "mock",
+    "dns-lexicon"
     "requests-mock",
 ]
 

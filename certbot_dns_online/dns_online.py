@@ -49,12 +49,12 @@ class Authenticator(dns_common.DNSAuthenticator):
 
     def _perform(self, domain, validation_name, validation):
         client = self._get_online_client()
-        client.provider.domain_id = ".".join(domain.split(".")[-2:])
+        client.provider.domain_id = ".".join(domain.split(".")[:])
         client.add_txt_record(domain, validation_name, validation)
 
     def _cleanup(self, domain, validation_name, validation):
         client = self._get_online_client()
-        client.provider.domain_id = ".".join(domain.split(".")[-2:])
+        client.provider.domain_id = domain
         client.del_txt_record(domain, validation_name, validation)
 
     def _get_online_client(self):
