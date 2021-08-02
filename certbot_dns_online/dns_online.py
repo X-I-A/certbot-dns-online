@@ -50,12 +50,12 @@ class Authenticator(dns_common.DNSAuthenticator):
     def _perform(self, domain, validation_name, validation):
         client = self._get_online_client()
         client.provider.domain_id = domain
-        self._get_online_client().add_txt_record(domain, validation_name, validation)
+        client.add_txt_record(domain, validation_name, validation)
 
     def _cleanup(self, domain, validation_name, validation):
         client = self._get_online_client()
         client.provider.domain_id = domain
-        self._get_online_client().del_txt_record(domain, validation_name, validation)
+        client.del_txt_record(domain, validation_name, validation)
 
     def _get_online_client(self):
         if not self.credentials:  # pragma: no cover
@@ -97,8 +97,3 @@ class _OnlineLexiconClient(dns_common_lexicon.LexiconClient):
             return
 
         super()._handle_general_error(e, domain_name)
-
-
-if __name__ == '__main__':
-    client = _OnlineLexiconClient("1c49264f177b3316af29889c598f05276059ad6f", 30)
-    client.add_txt_record("s4hana.me", "test", "fdqfefqgdgdfeffqsdf")
