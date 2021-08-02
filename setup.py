@@ -24,7 +24,7 @@ setup(
     version=version,
     description="Online.net DNS Authenticator plugin for Certbot",
     long_description=long_description,
-    long_description_content_type="text/md",
+    long_description_content_type="text/markdown",
     url="https://github.com/certbot/certbot",
     author="X-I-A",
     author_email="admin@x-i-a.com",
