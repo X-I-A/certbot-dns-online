@@ -1,74 +1,62 @@
-import os
-import sys
-
-from setuptools import find_packages
 from setuptools import setup
+from setuptools import find_packages
 
-version = '0.0.1'
+version = "0.0.2"
 
 install_requires = [
-    'dns-lexicon>=3.2.1',
-    'setuptools>=39.0.1',
-    'zope.interface',
+    "acme>=0.29.0",
+    "certbot>=0.34.0",
+    "setuptools",
+    "requests",
+    "mock",
+    "requests-mock",
 ]
 
-if not os.environ.get('SNAP_BUILD'):
-    install_requires.extend([
-        # We specify the minimum acme and certbot version as the current plugin
-        # version for simplicity. See
-        # https://github.com/certbot/certbot/issues/8761 for more info.
-        f'acme>={version}',
-        f'certbot>={version}',
-    ])
-elif 'bdist_wheel' in sys.argv[1:]:
-    raise RuntimeError('Unset SNAP_BUILD when building wheels '
-                       'to include certbot dependencies.')
-if os.environ.get('SNAP_BUILD'):
-    install_requires.append('packaging')
+# read the contents of your README file
+from os import path
 
-docs_extras = [
-    'Sphinx>=1.0',  # autodoc_member_order = 'bysource', autodoc_default_flags
-    'sphinx_rtd_theme',
-]
+this_directory = path.abspath(path.dirname(__file__))
+with open(path.join(this_directory, "README.md")) as f:
+    long_description = f.read()
 
 setup(
-    name='certbot-dns-online',
+    name="certbot-dns-online",
     version=version,
-    description="Scaleway Dedibox (online.net) DNS Authenticator plugin for Certbot",
-    url='https://github.com/certbot/certbot',
-    author="Certbot Project",
-    author_email='certbot-dev@eff.org',
-    license='Apache License 2.0',
-    python_requires='>=3.6',
+    description="Online.net DNS Authenticator plugin for Certbot",
+    long_description=long_description,
+    long_description_content_type="text/md",
+    url="https://github.com/certbot/certbot",
+    author="X-I-A",
+    author_email="admin@x-i-a.com",
+    license="Apache License 2.0",
+    python_requires=">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*",
     classifiers=[
-        'Development Status :: 5 - Production/Stable',
-        'Environment :: Plugins',
-        'Intended Audience :: System Administrators',
-        'License :: OSI Approved :: Apache Software License',
-        'Operating System :: POSIX :: Linux',
-        'Programming Language :: Python',
-        'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.6',
-        'Programming Language :: Python :: 3.7',
-        'Programming Language :: Python :: 3.8',
-        'Programming Language :: Python :: 3.9',
-        'Topic :: Internet :: WWW/HTTP',
-        'Topic :: Security',
-        'Topic :: System :: Installation/Setup',
-        'Topic :: System :: Networking',
-        'Topic :: System :: Systems Administration',
-        'Topic :: Utilities',
+        "Development Status :: 3 - Alpha",
+        "Environment :: Plugins",
+        "Intended Audience :: System Administrators",
+        "License :: OSI Approved :: Apache Software License",
+        "Operating System :: POSIX :: Linux",
+        "Programming Language :: Python",
+        "Programming Language :: Python :: 2",
+        "Programming Language :: Python :: 2.7",
+        "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 3.4",
+        "Programming Language :: Python :: 3.5",
+        "Programming Language :: Python :: 3.6",
+        "Programming Language :: Python :: 3.7",
+        "Topic :: Internet :: WWW/HTTP",
+        "Topic :: Security",
+        "Topic :: System :: Installation/Setup",
+        "Topic :: System :: Networking",
+        "Topic :: System :: Systems Administration",
+        "Topic :: Utilities",
     ],
-
     packages=find_packages(),
     include_package_data=True,
     install_requires=install_requires,
-    extras_require={
-        'docs': docs_extras,
-    },
     entry_points={
-        'certbot.plugins': [
-            'dns-online = certbot_dns_online._internal.dns_online:Authenticator',
-        ],
+        "certbot.plugins": [
+            "dns-online = certbot_dns_online.dns_online:Authenticator"
+        ]
     },
 )
